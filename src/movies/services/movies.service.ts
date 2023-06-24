@@ -20,6 +20,9 @@ export class MoviesService {
 
   ) {}
 
+  async forPlaylists(){
+    return this.movieRepository.find()
+  }
   async findAll(): Promise<Movie[]> {
     return this.movieRepository.find();
   }
@@ -109,4 +112,5 @@ export class MoviesService {
       return false;
     }
   }
+
 }

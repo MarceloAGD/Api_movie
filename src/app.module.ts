@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
+import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { MoviesModule } from './movies/movies.module';
-import { PlaylistsModule } from './playlists/playlists.module';
-import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActorsModule } from './actors/actors.module';
 import { CastsModule } from './casts/casts.module';
@@ -12,9 +9,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: {
+        federation: 2,
+      },
     }),
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
@@ -27,16 +26,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: true, 
       }),
       inject:[ConfigService],
       
     }),
-    UsersModule,
     MoviesModule,
     ActorsModule,
     CastsModule,
-    PlaylistsModule,
   ],
 })
 export class AppModule {

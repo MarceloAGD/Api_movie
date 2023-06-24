@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryColumn, ManyToMany, OneToMany} from 'typeorm';
-import { ObjectType, Field, Int} from '@nestjs/graphql';
-import { Playlist } from '../../playlists/entities/playlist.entity';
+import { Entity, Column, PrimaryColumn, OneToMany} from 'typeorm';
+import { ObjectType, Field, Int, Directive} from '@nestjs/graphql';
 import { Cast } from '../../casts/entities/cast.entity';
 
 @Entity()
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Movie{
 
     @PrimaryColumn({type: 'int'})
@@ -22,10 +22,6 @@ export class Movie{
     @Column()
     @Field({nullable: true})
     overview: string;
-
-    @ManyToMany(() => Playlist, playlist => playlist.movies)
-    @Field(() => [Playlist])
-    playlists: Playlist[];
 
     @OneToMany(() => Cast, cast => cast.movie)
     @Field(() => [Cast],{nullable: true})
