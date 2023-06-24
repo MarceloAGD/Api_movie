@@ -31,7 +31,7 @@ export class MoviesService {
     return this.movieRepository.findOne({
       where: {
         id,
-      },
+      },relations: ['cast']
     });
   }
 

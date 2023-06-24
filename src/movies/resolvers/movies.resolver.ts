@@ -2,8 +2,9 @@ import { Args, Mutation, Parent, ResolveField, ResolveReference, Resolver } from
 import {MoviesService} from '../services/movies.service';
 import { Query } from '@nestjs/graphql';
 import {Movie} from '../entities/movie.entity'
+import { Cast } from 'src/casts/entities/cast.entity';
 
-@Resolver()
+@Resolver(() => Movie)
 export class MoviesResolver {
     constructor(private movieService: MoviesService) {}
 
