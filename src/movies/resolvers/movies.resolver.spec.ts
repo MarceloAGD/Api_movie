@@ -51,7 +51,6 @@ describe('MoviesResolver', () => {
           poster_path: '',
           overview: '',
           cast: [],
-          playlists: [],
         },
         {
           id: 2,
@@ -59,7 +58,6 @@ describe('MoviesResolver', () => {
           poster_path: '',
           overview: '',
           cast: [],
-          playlists: [],
         },
       ];
       jest.spyOn(service, 'findAll').mockResolvedValue(movies);
@@ -78,7 +76,6 @@ describe('MoviesResolver', () => {
         poster_path: '',
         overview: '',
         cast: [],
-        playlists: [],
       };
       jest.spyOn(service, 'findOne').mockResolvedValue(movie);
       expect(await resolver.MovieId(id)).toEqual(movie);

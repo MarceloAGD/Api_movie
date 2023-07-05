@@ -1,7 +1,7 @@
 import { Resolver ,Query, ResolveField, Parent, Args} from '@nestjs/graphql';
 import { CastsService } from '../services/casts.service';
 import { Cast } from '../entities/cast.entity';
-import { Actor } from 'src/actors/entities/actor.entity';
+import { Actor } from '../../actors/entities/actor.entity';
 
 @Resolver(() => Cast)
 export class CastsResolver {

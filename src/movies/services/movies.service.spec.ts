@@ -62,14 +62,12 @@ describe('MoviesService', () => {
           title: 'Test Movie1',
           poster_path: '',
           overview: '',
-          cast: [],
-          playlists: [],},
+          cast: [],},
         { id: 2,
           title: 'Test Movie2',
           poster_path: '',
           overview: '',
-          cast: [],
-          playlists: [],},
+          cast: [],},
       ];
       jest.spyOn(movieRepository, 'find').mockResolvedValue(movies);
 
@@ -81,7 +79,7 @@ describe('MoviesService', () => {
 
   describe('findOne', () => {
     it('should return a movie by id', async () => {
-      const movie: Movie = { id: 1, title: 'Movie 1', poster_path: '', overview: '', cast: [], playlists: []};
+      const movie: Movie = { id: 1, title: 'Movie 1', poster_path: '', overview: '', cast: []};
       jest.spyOn(movieRepository, 'findOne').mockResolvedValue(movie);
 
       const result = await service.findOne(1);
@@ -117,7 +115,7 @@ describe('MoviesService', () => {
   describe('insertMovie', () => {
     it('should insert a new movie', async () => {
       const movie: CreateNovieInput = { id: 1, title: 'Movie 1', poster_path: '', overview: ''};
-      const newMovie: Movie = { id: 1, title: 'Movie 1', poster_path: '', overview: '', cast: [], playlists: [] };
+      const newMovie: Movie = { id: 1, title: 'Movie 1', poster_path: '', overview: '', cast: []};
       jest.spyOn(movieRepository, 'save').mockResolvedValue(newMovie);
 
       const result = await service.insertMovie(movie);
@@ -133,7 +131,7 @@ describe('MoviesService', () => {
       const character = 'Character 1';
       const castId = 1;
       const actor: Actor = { id: idActor, name: 'Actor 1', cast: []};
-      const movie: Movie = { id: id, title: 'Movie 1', poster_path: '', overview: '', cast: [], playlists: []};
+      const movie: Movie = { id: id, title: 'Movie 1', poster_path: '', overview: '', cast: []};
       const newCast: Cast = {
         idCast: 1,
         actor: actor,

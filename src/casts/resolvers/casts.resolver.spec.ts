@@ -4,11 +4,14 @@ import { Repository } from 'typeorm';
 import { Cast } from '../entities/cast.entity';
 import { CastsService } from '../services/casts.service';
 import { CastsResolver } from './casts.resolver';
+import { Actor } from '../../actors/entities/actor.entity';
+import { ActorsService } from '../../actors/services/actors.service';
 
 describe('CastsResolver', () => {
   let resolver: CastsResolver;
   let service: CastsService;
   let repository: Repository<Cast>;
+  let actorsRepository: Repository<Actor>
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,8 +26,13 @@ describe('CastsResolver', () => {
       providers: [
         CastsResolver,
         CastsService,
+        ActorsService,
         {
           provide: getRepositoryToken(Cast),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(Actor),
           useClass: Repository,
         },
       ],
@@ -50,7 +58,6 @@ describe('CastsResolver', () => {
             poster_path: '',
             overview: '',
             cast: [],
-            playlists: [],
           },
           actor: { id: 1, name: 'John Doe' },
         },
@@ -66,7 +73,6 @@ describe('CastsResolver', () => {
             poster_path: '',
             overview: '',
             cast: [],
-            playlists: [],
           },
           actor: { id: 1, name: 'John Doe' },
         },
@@ -93,7 +99,6 @@ describe('CastsResolver', () => {
             poster_path: '',
             overview: '',
             cast: [],
-            playlists: [],
           },
           actor: { id: 1, name: 'John Doe' },
         },

@@ -3,10 +3,12 @@ import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cast } from '../entities/cast.entity';
 import { CastsService } from './casts.service';
+import { ActorsService } from '../../actors/services/actors.service';
 
 describe('CastsService', () => {
   let service: CastsService;
   let repository: Repository<Cast>;
+  let actorsService: ActorsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,9 +22,16 @@ describe('CastsService', () => {
       ],
       providers: [
         CastsService,
+        ActorsService,
         {
           provide: getRepositoryToken(Cast),
           useClass: Repository,
+        },
+        {
+          provide: ActorsService,
+          useValue: {
+            findOne: jest.fn(),
+          },
         },
       ],
     }).compile();
@@ -40,8 +49,7 @@ describe('CastsService', () => {
         title: 'Test Movie1',
         poster_path: '',
         overview: '',
-        cast: [],
-        playlists: []};
+        cast: []};
       cast1.actor = { id: 1 , name: 'John Doe' };
 
       const cast2 = new Cast();
@@ -51,8 +59,7 @@ describe('CastsService', () => {
         title: 'Test Movie2',
         poster_path: '',
         overview: '',
-        cast: [],
-        playlists: []};
+        cast: []};
       cast2.actor = { id: 2 , name: 'Jane Smith'};
 
       jest.spyOn(repository, 'find').mockResolvedValue([cast1, cast2]);
@@ -78,7 +85,6 @@ describe('CastsService', () => {
             poster_path: '',
             overview: '',
             cast: [],
-            playlists: [],
           },
           actor: { id: 1, name: 'John Doe' },
         },
@@ -94,7 +100,6 @@ describe('CastsService', () => {
             poster_path: '',
             overview: '',
             cast: [],
-            playlists: [],
           },
           actor: { id: 1, name: 'John Doe' },
         },
